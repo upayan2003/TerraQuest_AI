@@ -1,0 +1,98 @@
+{
+    "rocky": {
+        "footwear": [
+            {"brand": "Merrell", "model": "Moab 3 Ventilator", "link": "https://www.merrell.com/moab-3-vent"},
+            {"brand": "La Sportiva", "model": "TX4 Approach Shoe", "link": "https://www.sportiva.com/tx4"},
+            {"brand": "Salewa", "model": "Mountain Trainer Lite", "link": "https://www.salewa.com/mountain-trainer-lite"},
+            {"brand": "Quechua", "model": "MH500 Mid", "link": "https://www.decathlon.in/p/mh500-mid"},
+            {"brand": "Adidas", "model": "Terrex AX4", "link": "https://www.adidas.com/us/terrex-ax4"}
+        ],
+        "tyres": [
+            {"brand": "Michelin", "model": "LTX A/T2", "link": "https://www.michelinman.com/ltx-a-t2"},
+            {"brand": "Yokohama", "model": "Geolandar M/T G003", "link": "https://www.yokohamatire.com/geolandar-mt"},
+            {"brand": "Apollo", "model": "Apterra HT2", "link": "https://www.apollotyres.com/in/en/apterra-ht2"},
+            {"brand": "MRF", "model": "Wanderer Street", "link": "https://www.mrftyres.com/wanderer-street"},
+            {"brand": "Goodyear", "model": "Wrangler AT SilentTrac", "link": "https://www.goodyear.co.in/suv/wrangler-at-silenttrac"}
+        ]
+    },
+    "muddy": {
+        "footwear": [
+            {"brand": "Salomon", "model": "Speedcross 6 GTX", "link": "https://www.salomon.com/speedcross-6-gtx"},
+            {"brand": "Columbia", "model": "Newton Ridge Plus II", "link": "https://www.columbia.com/newton-ridge"},
+            {"brand": "Merrell", "model": "Moab 3 Mid Waterproof", "link": "https://www.merrell.com/moab-3-mid"},
+            {"brand": "Adidas", "model": "Terrex Swift R3 GTX", "link": "https://www.adidas.com/terrex-swift"},
+            {"brand": "Quechua", "model": "MH500 Mid Waterproof", "link": "https://www.decathlon.in/mh500-mid"}
+        ],
+        "tyres": [
+            {"brand": "BFGoodrich", "model": "Mud-Terrain T/A KM3", "link": "https://www.bfgoodrichtires.com/km3"},
+            {"brand": "Goodyear", "model": "Wrangler Duratrac", "link": "https://www.goodyear.com/duratrac"},
+            {"brand": "Michelin", "model": "LTX A/T2", "link": "https://www.michelinman.com/ltx-a-t2"},
+            {"brand": "Apollo", "model": "Apterra AT2", "link": "https://www.apollotyres.com/apterra-at2"},
+            {"brand": "MRF", "model": "Wanderer A/T", "link": "https://www.mrftyres.com/wanderer-at"}
+        ]
+    },
+    "vegetated": {
+        "footwear": [
+            {"brand": "Quechua", "model": "NH100", "link": "https://www.decathlon.in/nh100"},
+            {"brand": "Columbia", "model": "Crestwood Waterproof", "link": "https://www.columbia.com/crestwood"},
+            {"brand": "Merrell", "model": "Alverstone 2", "link": "https://www.merrell.com/alverstone-2"},
+            {"brand": "Adidas", "model": "Terrex Eastrail", "link": "https://www.adidas.com/terrex-eastrail"},
+            {"brand": "Wildcraft", "model": "Trail Running Shoes", "link": "https://wildcraft.com/trail"}
+        ],
+        "tyres": [
+            {"brand": "Apollo", "model": "Apterra HL", "link": "https://www.apollotyres.com/apterra-hl"},
+            {"brand": "MRF", "model": "ZVTS", "link": "https://www.mrftyres.com/zvts"},
+            {"brand": "JK Tyre", "model": "Ranger H/T", "link": "https://www.jktyre.com/ranger-ht"},
+            {"brand": "Ceat", "model": "Milaze X3", "link": "https://www.ceat.com/milaze-x3"},
+            {"brand": "Bridgestone", "model": "Dueler H/L", "link": "https://www.bridgestone.co.in/dueler"}
+        ]
+    },
+    "snowy": {
+        "footwear": [
+            {"brand": "The North Face", "model": "Chilkat V", "link": "https://www.thenorthface.com/chilkat"},
+            {"brand": "Columbia", "model": "Bugaboot Celsius Plus", "link": "https://www.columbia.com/bugaboot"},
+            {"brand": "Merrell", "model": "Thermo Chill", "link": "https://www.merrell.com/thermo-chill"},
+            {"brand": "Quechua", "model": "SH520 X-Warm", "link": "https://www.decathlon.in/sh520"},
+            {"brand": "Sorel", "model": "Caribou Boot", "link": "https://www.sorel.com/caribou"}
+        ],
+        "tyres": [
+            {"brand": "Bridgestone", "model": "Blizzak WS90", "link": "https://www.bridgestonetire.com/blizzak-ws90"},
+            {"brand": "Michelin", "model": "X-Ice Snow", "link": "https://www.michelinman.com/x-ice-snow"},
+            {"brand": "Goodyear", "model": "UltraGrip Ice", "link": "https://www.goodyear.com/ultragrip"},
+            {"brand": "Pirelli", "model": "Winter Sottozero", "link": "https://www.pirelli.com/winter-sottozero"},
+            {"brand": "Apollo", "model": "Alnac Winter", "link": "https://www.apollotyres.com/alnac-winter"}
+        ]
+    },
+    "sandy": {
+        "footwear": [
+            {"brand": "Adidas", "model": "Terrex Voyager", "link": "https://www.adidas.com/terrex-voyager"},
+            {"brand": "Quechua", "model": "NH150", "link": "https://www.decathlon.in/nh150"},
+            {"brand": "Merrell", "model": "All Out Blaze Sieve", "link": "https://www.merrell.com/alloutblaze"},
+            {"brand": "Keen", "model": "Newport H2", "link": "https://www.keenfootwear.com/newport"},
+            {"brand": "Columbia", "model": "Drainmaker IV", "link": "https://www.columbia.com/drainmaker"}
+        ],
+        "tyres": [
+            {"brand": "BFGoodrich", "model": "All-Terrain T/A KO2", "link": "https://www.bfgoodrichtires.com/ko2"},
+            {"brand": "Apollo", "model": "Apterra Cross", "link": "https://www.apollotyres.com/apterra-cross"},
+            {"brand": "Yokohama", "model": "Geolandar A/T G015", "link": "https://www.yokohamatire.com/geolandar-at-g015"},
+            {"brand": "Michelin", "model": "LTX Trail", "link": "https://www.michelinman.com/ltx-trail"},
+            {"brand": "MRF", "model": "Wanderer Sport", "link": "https://www.mrftyres.com/wanderer-sport"}
+        ]
+    },
+    "urban": {
+        "footwear": [
+            {"brand": "Nike", "model": "Air Zoom Pegasus 40", "link": "https://www.nike.com/t/air-zoom-pegasus-40"},
+            {"brand": "Adidas", "model": "Ultraboost Light", "link": "https://www.adidas.com/ultraboost-light"},
+            {"brand": "New Balance", "model": "Fresh Foam 1080", "link": "https://www.newbalance.com/fresh-foam-1080"},
+            {"brand": "Puma", "model": "Velocity Nitro 2", "link": "https://in.puma.com/velocity-nitro-2"},
+            {"brand": "ASICS", "model": "Gel-Kayano 30", "link": "https://www.asics.com/gel-kayano-30"}
+        ],
+        "tyres": [
+            {"brand": "Michelin", "model": "Primacy 4 ST", "link": "https://www.michelin.in/auto/tyres/michelin-primacy-4-st"},
+            {"brand": "Bridgestone", "model": "Turanza T005", "link": "https://www.bridgestone.com/turanza-t005"},
+            {"brand": "Apollo", "model": "Amazer 4G Life", "link": "https://www.apollotyres.com/amazer-4g-life"},
+            {"brand": "MRF", "model": "ZLX", "link": "https://www.mrftyres.com/car-tyres/zlx"},
+            {"brand": "Goodyear", "model": "Assurance TripleMax 2", "link": "https://www.goodyear.co.in/assurance-triplemax-2"}
+        ]
+    }
+}
