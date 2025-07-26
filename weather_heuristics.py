@@ -72,4 +72,4 @@ if __name__ == "__main__":
     terrain_status = checker.assess_terrain_condition(lat, lon)
     print(f"Predicted Terrain Condition: {terrain_status}")
 
-# git commit check
+# git pull check
