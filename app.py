@@ -66,10 +66,7 @@ def download_dataset(hf_url: str, extract_to: str = "data") -> str:
             zip_ref.extractall(extract_to)
 
     return dataset_root
-
-HF_DATASET_URL = "https://huggingface.co/datasets/upayan2003/TerrainDataset/resolve/main/TerrainClassification.zip"
-
-
+    
 # -------------------- Load Custom CSS --------------------
 with open('style.css') as f:
     st.write(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -90,7 +87,8 @@ def main():
     prediction = ""
     condition = None
     image_path = ""
-
+    
+    HF_DATASET_URL = "https://huggingface.co/datasets/upayan2003/TerrainDataset/resolve/main/TerrainClassification.zip"
     dataset_root = download_dataset(HF_DATASET_URL)
 
     if input_type == "Ground Image":
