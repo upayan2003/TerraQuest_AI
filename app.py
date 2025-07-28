@@ -112,6 +112,55 @@ def main():
             sorted_confidences = sorted(confidences.items(), key=lambda x: float(x[1].replace('%', '')), reverse=True)
             st.caption("Confidence Scores - " + " | ".join(f"{cls.capitalize()}: {conf}" for cls, conf in sorted_confidences))
 
+        # -------------------- Feedback & Recommendation Section --------------------
+        # User feedback
+        st.markdown("### Is the prediction correct?")
+        user_feedback = st.radio("Please confirm:", ["Yes", "No"], horizontal=True)
+
+        # Initial predicted classes
+        predicted_classes = prediction.split("&")
+
+        if user_feedback == "No":
+            st.warning("You can manually select the correct terrain type.")
+            manual_selection = st.multiselect(
+                "Select the correct terrain class(es):",
+                options=["Muddy", "Rocky", "Sandy", "Vegetated", "Urban", "Snowy"],
+                default=[]
+            )
+            if manual_selection:
+                predicted_classes = [cls.lower() for cls in manual_selection]
+
+        # Weather heuristics
+        elif condition and user_feedback == "Yes":
+            if condition == "Mud Prone":
+                if any(t in ["rocky", "vegetated", "sandy", "urban"] for t in predicted_classes) and "muddy" not in predicted_classes:
+                    predicted_classes.insert(0, "muddy")
+            elif condition == "Snow Prone":
+                if any(t in ["rocky", "vegetated", "sandy", "urban"] for t in predicted_classes) and "snowy" not in predicted_classes:
+                    predicted_classes.insert(0, "snowy")
+
+        item_type = st.selectbox("Get recommendations for:", ["Footwear", "Tyres"])
+
+        st.markdown(f"**Final Terrain Classes:** {', '.join((i.capitalize() for i in predicted_classes))}")
+
+        items = []
+        seen = set()
+        for terrain_key in predicted_classes:
+            terrain_items = catalog.get(terrain_key, {}).get(item_type.lower(), [])
+            for item in terrain_items:
+                key = (item['brand'], item['model'])
+                if key not in seen:
+                    seen.add(key)
+                    items.append(item)
+
+        if items:
+            st.subheader(f"Top {len(items)} recommended {item_type} for this terrain:")
+            for i, item in enumerate(items, 1):
+                st.markdown(f"**{i}. {item['brand']} - {item['model']}**")
+                st.markdown(f"[View Item]({item['link']})")
+        else:
+            st.warning("No recommendations found for this terrain.")
+
     elif input_type == "Coordinates":
         authenticate_earth_engine(st.secrets["gcp"]["gcloud_json"])
 
@@ -214,7 +263,8 @@ def main():
 
         st.info(f"Terrain Condition: **{condition}**")
 
-        # User feedback and manual selection
+    # -------------------- Feedback & Recommendation Section --------------------
+        # User feedback
         st.markdown("### Is the prediction correct?")
         user_feedback = st.radio("Please confirm:", ["Yes", "No"], horizontal=True)
 
@@ -244,7 +294,6 @@ def main():
 
         st.markdown(f"**Final Terrain Classes:** {', '.join((i.capitalize() for i in predicted_classes))}")
 
-    # -------------------- Recommendation Section --------------------
         items = []
         seen = set()
         for terrain_key in predicted_classes:
