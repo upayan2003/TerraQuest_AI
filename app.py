@@ -40,6 +40,36 @@ def get_model_path(model_type):
     hf_url = HF_MODEL_URLS[model_type]
     return download_model(hf_url, filename)
 
+import os
+import requests
+import zipfile
+import streamlit as st
+
+# -------------------- Download and Extract Dataset --------------------
+@st.cache_data(show_spinner="Downloading dataset...")
+def download_dataset(hf_url: str, extract_to: str = "data") -> str:
+    os.makedirs(extract_to, exist_ok=True)
+    zip_path = os.path.join(extract_to, "TerrainDataset.zip")
+
+    # Download only if not already present
+    if not os.path.exists(zip_path):
+        response = requests.get(hf_url, stream=True)
+        with open(zip_path, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+
+    dataset_root = os.path.join(extract_to, "Dataset")
+    
+    # Extract only if not already extracted
+    if not os.path.exists(dataset_root):
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(extract_to)
+
+    return dataset_root
+
+HF_DATASET_URL = "https://huggingface.co/datasets/upayan2003/TerrainDataset/resolve/main/TerrainClassification.zip"
+
+
 # -------------------- Load Custom CSS --------------------
 with open('style.css') as f:
     st.write(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -61,6 +91,8 @@ def main():
     condition = None
     image_path = ""
 
+    dataset_root = download_dataset(HF_DATASET_URL)
+
     if input_type == "Ground Image":
         uploaded_image = st.file_uploader("Upload Ground-Level Image", type=["png", "jpg", "jpeg"])
         if uploaded_image:
@@ -69,7 +101,7 @@ def main():
                 f.write(uploaded_image.read())
 
             model_path = get_model_path("ground")
-            data_dir = "TerrainDataset/Dataset/ground_images"
+            data_dir = os.path.join(dataset_root, "ground_images")
             _, _, class_names = get_dataloaders(data_dir)
 
             prediction, confidences = predict_image(image_path, model_path, class_names, input_type='ground')
@@ -135,7 +167,7 @@ def main():
 
                 if os.path.exists(image_path):
                     model_path = get_model_path("satellite")
-                    data_dir = "TerrainDataset/Dataset/satellite_images"
+                    data_dir = os.path.join(dataset_root, "satellite_images")
                     _, _, class_names = get_dataloaders(data_dir)
 
                     prediction, confidences = predict_image(image_path, model_path, class_names, input_type='satellite')
