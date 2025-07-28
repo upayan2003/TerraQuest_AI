@@ -26,7 +26,8 @@ with open('style.css') as f:
 
 # -------------------- Main App --------------------
 def main():
-    st.title("🧭 Terrain Gear Recommender")
+    st.title("TerraQuest AI")
+    st.caption("### AI-Powered Terrain Detection with Smart Gear Recommendations")
     st.markdown("---")
 
     catalog = load_catalog("gear_catalog.json")
@@ -34,7 +35,7 @@ def main():
         st.warning("No gear catalog found. Please check the file.")
         return
 
-    input_type = st.radio("Choose Input Type:", ["Ground Image", "Coordinates"])
+    input_type = st.radio("Choose Input Type:", ["Ground Image", "Coordinates"], horizontal=True)
 
     prediction = ""
     condition = None
@@ -66,7 +67,7 @@ def main():
 
         st.subheader("Select Coordinates")
 
-        coord_input_mode = st.radio("How would you like to input coordinates?", ["Enter manually", "Choose on map"])
+        coord_input_mode = st.radio("How would you like to input coordinates?", ["Enter manually", "Choose on map"], horizontal=True)
 
         lat, lon = None, None
 
@@ -105,61 +106,95 @@ def main():
                 st_folium(m, height=400, key="map_with_marker")
 
                 st.markdown(f"**Selected Coordinates**: {lat:.6f}, {lon:.6f}")
-            else:
-                st.subheader("**Click on the map below to pick coordinates:**")
 
         # Button triggers everything below
-        if lat is not None and lon is not None and st.button("Classify Terrain from Coordinates"):
-            # Generate satellite patch
-            image_path = "patch.png"
-            get_satellite_patch(lat, lon, output_path=image_path)
+        if lat is not None and lon is not None:
+            if st.button("Classify Terrain from Coordinates"):
+                image_path = "patch.png"
+                _, nightlight = get_satellite_patch(lat, lon, output_path=image_path)
 
-            # Ensure the patch file exists before proceeding
-            if os.path.exists(image_path):
+                if os.path.exists(image_path):
+                    model_path = "terrain_classifier_satellite.pth"
+                    data_dir = "Dataset/satellite_images"
+                    _, _, class_names = get_dataloaders(data_dir)
 
-                model_path = "terrain_classifier_satellite.pth"
-                data_dir = "Dataset/satellite_images"
-                _, _, class_names = get_dataloaders(data_dir)
+                    prediction, confidences = predict_image(image_path, model_path, class_names, input_type='satellite')
 
-                prediction, confidences = predict_image(image_path, model_path, class_names, input_type='satellite')
+                    # Heuristic: Override rocky → urban if nightlight is more than 7
+                    apply_heuristic_note = False
+                    if prediction == "rocky" and nightlight > 7:
+                        prediction = "urban"
+                        apply_heuristic_note = True
 
-                # Weather integration
-                with open("WeatherAPI_Key.txt", "r") as f:
-                    API_KEY = f.read().strip()
-                condition, location_weather = Weather(API_KEY).assess_terrain_condition(lat, lon)
+                    # Weather integration
+                    with open("WeatherAPI_Key.txt", "r") as f:
+                        API_KEY = f.read().strip()
+                    condition, location_weather = Weather(API_KEY).assess_terrain_condition(lat, lon)
 
-                st.image(image_path, caption="Satellite Image", width=300)
-                st.caption(f"Weather Summary - {location_weather}")
+                    # Store in session
+                    st.session_state["image_path"] = image_path
+                    st.session_state["prediction"] = prediction
+                    st.session_state["confidences"] = confidences
+                    st.session_state["apply_heuristic_note"] = apply_heuristic_note
+                    st.session_state["condition"] = condition
+                    st.session_state["weather_summary"] = location_weather
 
-                formatted_prediction = " & ".join(word.capitalize() for word in prediction.split("&"))
-                st.success(f"Predicted Terrain: {formatted_prediction}")
+                else:
+                    st.error("Satellite patch could not be saved. Please try again.")
 
-                sorted_confidences = sorted(confidences.items(), key=lambda x: float(x[1].replace('%', '')), reverse=True)
-                st.caption("Confidence Scores - " + " | ".join(f"{cls.capitalize()}: {conf}" for cls, conf in sorted_confidences))
-                
-                st.info(f"Terrain Condition: {condition}")
-            else:
-                st.error("Satellite patch could not be saved. Please try again.")
+    if "prediction" in st.session_state:
+        image_path = st.session_state["image_path"]
+        prediction = st.session_state["prediction"]
+        confidences = st.session_state["confidences"]
+        apply_heuristic_note = st.session_state.get("apply_heuristic_note", False)
+        condition = st.session_state["condition"]
+        location_weather = st.session_state["weather_summary"]
 
-    # -------------------- Recommendation Section --------------------
-    if prediction:
-        item_type = st.selectbox("Get recommendations for:", ["Footwear", "Tyres"])
+        st.image(image_path, caption="Satellite Image", width=300)
+        st.caption(f"Weather Summary - {location_weather}")
 
+        formatted_prediction = " & ".join(word.capitalize() for word in prediction.split("&"))
+        st.success(f"Predicted Terrain: **{formatted_prediction}**")
+
+        sorted_confidences = sorted(confidences.items(), key=lambda x: float(x[1].replace('%', '')), reverse=True)
+        st.caption("Confidence Scores - " + " | ".join(f"{cls.capitalize()}: {conf}" for cls, conf in sorted_confidences))
+
+        if apply_heuristic_note:
+            st.markdown("**Note:** Terrain classified as **Urban** on the basis of nightlight.")
+
+        st.info(f"Terrain Condition: **{condition}**")
+
+        # User feedback and manual selection
+        st.markdown("### Is the prediction correct?")
+        user_feedback = st.radio("Please confirm:", ["Yes", "No"], horizontal=True)
+
+        # Initial predicted classes
         predicted_classes = prediction.split("&")
 
-        # Weather heuristics for coordinate input
-        if input_type == "Coordinates" and condition:
+        if user_feedback == "No":
+            st.warning("You can manually select the correct terrain type.")
+            manual_selection = st.multiselect(
+                "Select the correct terrain class(es):",
+                options=["Muddy", "Rocky", "Sandy", "Vegetated", "Urban", "Snowy"],
+                default=[]
+            )
+            if manual_selection:
+                predicted_classes = [cls.lower() for cls in manual_selection]
+
+        # Weather heuristics
+        elif condition and user_feedback == "Yes":
             if condition == "Mud Prone":
-                for terrain in predicted_classes:
-                    if terrain in ["rocky", "vegetated", "sandy", "urban"] and "muddy" not in predicted_classes:
-                        predicted_classes.insert(0, "muddy")
+                if any(t in ["rocky", "vegetated", "sandy", "urban"] for t in predicted_classes) and "muddy" not in predicted_classes:
+                    predicted_classes.insert(0, "muddy")
             elif condition == "Snow Prone":
-                for terrain in predicted_classes:
-                    if terrain in ["rocky", "vegetated", "sandy", "urban"] and "snowy" not in predicted_classes:
-                        predicted_classes.insert(0, "snowy")
+                if any(t in ["rocky", "vegetated", "sandy", "urban"] for t in predicted_classes) and "snowy" not in predicted_classes:
+                    predicted_classes.insert(0, "snowy")
+
+        item_type = st.selectbox("Get recommendations for:", ["Footwear", "Tyres"])
 
         st.markdown(f"**Final Terrain Classes:** {', '.join((i.capitalize() for i in predicted_classes))}")
 
+    # -------------------- Recommendation Section --------------------
         items = []
         seen = set()
         for terrain_key in predicted_classes:

@@ -1,98 +1,98 @@
 {
     "rocky": {
         "footwear": [
-            {"brand": "Merrell", "model": "Moab 3 Ventilator", "link": "https://www.merrell.com/moab-3-vent"},
-            {"brand": "La Sportiva", "model": "TX4 Approach Shoe", "link": "https://www.sportiva.com/tx4"},
-            {"brand": "Salewa", "model": "Mountain Trainer Lite", "link": "https://www.salewa.com/mountain-trainer-lite"},
-            {"brand": "Quechua", "model": "MH500 Mid", "link": "https://www.decathlon.in/p/mh500-mid"},
-            {"brand": "Adidas", "model": "Terrex AX4", "link": "https://www.adidas.com/us/terrex-ax4"}
+            {"brand": "Merrell", "model": "Moab 3", "link": "https://www.merrell.com/US/en/moab-3/52481M.html"},
+            {"brand": "La Sportiva", "model": "TX4 EVO Approach Shoe", "link": "https://www.lasportivausa.com/tx4-evo.html"},
+            {"brand": "Salewa", "model": "Mountain Trainer Lite", "link": "https://www.salewa.com/mountain-trainer-lite-men_s-shoes-00-0000061363"},
+            {"brand": "Forclaz", "model": "MT100", "link": "https://www.decathlon.in/p/8319097/men-waterproof-trekking-shoes-mid-ankle-with-cross-contact-grip-grey-mt100"},
+            {"brand": "Adidas", "model": "Terrex AX4", "link": "https://www.adidas.co.in/terrex-ax4-hiking-shoes/HP7388.html"}
         ],
         "tyres": [
-            {"brand": "Michelin", "model": "LTX A/T2", "link": "https://www.michelinman.com/ltx-a-t2"},
-            {"brand": "Yokohama", "model": "Geolandar M/T G003", "link": "https://www.yokohamatire.com/geolandar-mt"},
-            {"brand": "Apollo", "model": "Apterra HT2", "link": "https://www.apollotyres.com/in/en/apterra-ht2"},
-            {"brand": "MRF", "model": "Wanderer Street", "link": "https://www.mrftyres.com/wanderer-street"},
-            {"brand": "Goodyear", "model": "Wrangler AT SilentTrac", "link": "https://www.goodyear.co.in/suv/wrangler-at-silenttrac"}
+            {"brand": "Michelin", "model": "LTX A/T2", "link": "https://www.michelinman.com/auto/tires/michelin-ltx-a-t-2"},
+            {"brand": "Yokohama", "model": "Geolandar M/T G003", "link": "https://www.yokohama-india.com/product/features/geolandar-mt-g003"},
+            {"brand": "Apollo", "model": "Apterra HT2", "link": "https://shop.apollotyres.com/apterra-ht2"},
+            {"brand": "MRF", "model": "Wanderer Street", "link": "https://www.mrftyres.com/product/passenger-cars/215-60r16-95h-et-tl-wanderer-street"},
+            {"brand": "Goodyear", "model": "Wrangler AT SilentTrac", "link": "https://www.goodyear.co.in/tyres/goodyear-wrangler-at-silenttrac"}
         ]
     },
     "muddy": {
         "footwear": [
-            {"brand": "Salomon", "model": "Speedcross 6 GTX", "link": "https://www.salomon.com/speedcross-6-gtx"},
-            {"brand": "Columbia", "model": "Newton Ridge Plus II", "link": "https://www.columbia.com/newton-ridge"},
-            {"brand": "Merrell", "model": "Moab 3 Mid Waterproof", "link": "https://www.merrell.com/moab-3-mid"},
-            {"brand": "Adidas", "model": "Terrex Swift R3 GTX", "link": "https://www.adidas.com/terrex-swift"},
-            {"brand": "Quechua", "model": "MH500 Mid Waterproof", "link": "https://www.decathlon.in/mh500-mid"}
+            {"brand": "Salomon", "model": "Speedcross 6 GORE-TEX", "link": "https://www.salomon.com/en-us/product/speedcross-6-gore-tex-lg9214"},
+            {"brand": "Columbia", "model": "Newton Ridge Plus II", "link": "https://www.columbiasportswear.co.in/products/columbia-men-brown-newton-ridge-plus-ii-suede-wp-bm2812-286"},
+            {"brand": "Merrell", "model": "Moab 3 Mid Waterproof", "link": "https://www.merrell.com/US/en/moab-3-mid-waterproof/52470M.html"},
+            {"brand": "Adidas", "model": "Terrex Swift R3 GORE-TEX", "link": "https://www.adidas.co.uk/terrex-swift-r3-gore-tex-shoes/HR1310.html"},
+            {"brand": "Quechua", "model": "MH500 Mid Waterproof", "link": "https://www.decathlon.in/p/8493840/men-s-hiking-shoe-waterproof-mid-ankle-mh500-grey"}
         ],
         "tyres": [
-            {"brand": "BFGoodrich", "model": "Mud-Terrain T/A KM3", "link": "https://www.bfgoodrichtires.com/km3"},
-            {"brand": "Goodyear", "model": "Wrangler Duratrac", "link": "https://www.goodyear.com/duratrac"},
-            {"brand": "Michelin", "model": "LTX A/T2", "link": "https://www.michelinman.com/ltx-a-t2"},
-            {"brand": "Apollo", "model": "Apterra AT2", "link": "https://www.apollotyres.com/apterra-at2"},
-            {"brand": "MRF", "model": "Wanderer A/T", "link": "https://www.mrftyres.com/wanderer-at"}
+            {"brand": "BFGoodrich", "model": "Mud-Terrain T/A KM3", "link": "https://www.bfgoodrichtires.com/auto/tires/bfgoodrich-mud-terrain-t-a-km3"},
+            {"brand": "Goodyear", "model": "Wrangler Duratrac", "link": "https://www.goodyear.com/en_US/tires/wrangler-duratrac/354.html"},
+            {"brand": "Michelin", "model": "LTX A/T2", "link": "https://www.michelinman.com/auto/tires/michelin-ltx-a-t-2"},
+            {"brand": "Apollo", "model": "Apterra AT2", "link": "https://shop.apollotyres.com/apterra-at2"},
+            {"brand": "MRF", "model": "Wanderer A/T", "link": "https://www.mrftyres.com/product/passenger-cars/235-65r17-104h-tl-wanderer-a-t"}
         ]
     },
     "vegetated": {
         "footwear": [
-            {"brand": "Quechua", "model": "NH100", "link": "https://www.decathlon.in/nh100"},
-            {"brand": "Columbia", "model": "Crestwood Waterproof", "link": "https://www.columbia.com/crestwood"},
-            {"brand": "Merrell", "model": "Alverstone 2", "link": "https://www.merrell.com/alverstone-2"},
-            {"brand": "Adidas", "model": "Terrex Eastrail", "link": "https://www.adidas.com/terrex-eastrail"},
-            {"brand": "Wildcraft", "model": "Trail Running Shoes", "link": "https://wildcraft.com/trail"}
+            {"brand": "Quechua", "model": "NH100", "link": "https://www.decathlon.in/p/8354268/men-low-ankle-hiking-shoes-grey-nh100"},
+            {"brand": "Columbia", "model": "Crestwood Waterproof", "link": "https://www.columbiasportswear.co.in/products/crestwood-waterproof-bm5372-241"},
+            {"brand": "Cliff Climbers", "model": "Jungle Boot Evo", "link": "https://cliffclimbers.in/product/jungle-boot-evo/732a9240-8870-4af2-ada7-b3946d05a9cf"},
+            {"brand": "Adidas", "model": "Terrex Eastrail 2", "link": "https://www.adidas.co.in/terrex-eastrail-2-hiking-shoes/IH1165.html"},
+            {"brand": "Salomon", "model": "X Ultra 4 GTX", "link": "https://my.salomon.com/products/salomon-men-x-ultra-4-gtx-outdoor-shoes-magnet-black-monument"}
         ],
         "tyres": [
-            {"brand": "Apollo", "model": "Apterra HL", "link": "https://www.apollotyres.com/apterra-hl"},
-            {"brand": "MRF", "model": "ZVTS", "link": "https://www.mrftyres.com/zvts"},
-            {"brand": "JK Tyre", "model": "Ranger H/T", "link": "https://www.jktyre.com/ranger-ht"},
-            {"brand": "Ceat", "model": "Milaze X3", "link": "https://www.ceat.com/milaze-x3"},
-            {"brand": "Bridgestone", "model": "Dueler H/L", "link": "https://www.bridgestone.co.in/dueler"}
+            {"brand": "Apollo", "model": "Apterra HL", "link": "https://www.apollotyres.com/en-in/car-suv-tyres/products/913-APTERRA-HL/"},
+            {"brand": "MRF", "model": "ZVTS A1", "link": "https://www.mrftyres.com/product/passenger-cars/155-65r14-75s-tl-zvts-a1"},
+            {"brand": "JK Tyre", "model": "Ranger H/T", "link": "https://pcr.jktyre.com/products/ranger/ranger-ht"},
+            {"brand": "Ceat", "model": "Milaze X3", "link": "https://www.ceat.com/car-tyres/milaze-x3-tyres.html"},
+            {"brand": "Bridgestone", "model": "Dueler H/L", "link": "https://www.bridgestone.co.in/passenger-tyres/dueler-tyres/hl-hp-hl33-d683-hp-sport"}
         ]
     },
     "snowy": {
         "footwear": [
-            {"brand": "The North Face", "model": "Chilkat V", "link": "https://www.thenorthface.com/chilkat"},
-            {"brand": "Columbia", "model": "Bugaboot Celsius Plus", "link": "https://www.columbia.com/bugaboot"},
-            {"brand": "Merrell", "model": "Thermo Chill", "link": "https://www.merrell.com/thermo-chill"},
-            {"brand": "Quechua", "model": "SH520 X-Warm", "link": "https://www.decathlon.in/sh520"},
-            {"brand": "Sorel", "model": "Caribou Boot", "link": "https://www.sorel.com/caribou"}
+            {"brand": "Merrell", "model": "Thermo Chill", "link": "https://www.merrell.com/FI/en_FI/thermo-chill-mid-waterproof/32356M.html"},
+            {"brand": "The North Face", "model": "Chilkat V 400", "link": "https://www.thenorthface.com/en-us/p/mens/mens-footwear/mens-boots-695280/mens-chilkat-v-400-waterproof-boots-NF0A5LVZ"},
+            {"brand": "Columbia", "model": "Bugaboot Celsius Plus", "link": "https://www.columbiasportswear.co.in/products/bugaboot-celsius-plus-bm1974-010"},
+            {"brand": "Quechua", "model": "SH500", "link": "https://www.decathlon.in/p/8502616/men-s-warm-and-waterproof-hiking-boots-sh500-mountain-mid"},
+            {"brand": "Sorel", "model": "Caribou Boot", "link": "https://www.sorel.com/p/caribou-mens-waterproof-boot-1002871.html"}
         ],
         "tyres": [
-            {"brand": "Bridgestone", "model": "Blizzak WS90", "link": "https://www.bridgestonetire.com/blizzak-ws90"},
-            {"brand": "Michelin", "model": "X-Ice Snow", "link": "https://www.michelinman.com/x-ice-snow"},
-            {"brand": "Goodyear", "model": "UltraGrip Ice", "link": "https://www.goodyear.com/ultragrip"},
-            {"brand": "Pirelli", "model": "Winter Sottozero", "link": "https://www.pirelli.com/winter-sottozero"},
-            {"brand": "Apollo", "model": "Alnac Winter", "link": "https://www.apollotyres.com/alnac-winter"}
+            {"brand": "Bridgestone", "model": "Blizzak WS90", "link": "https://www.bridgestonetire.com/tire/blizzak-ws90/175-65R15/"},
+            {"brand": "Michelin", "model": "X-Ice Snow", "link": "https://www.michelinman.com/auto/tires/michelin-x-ice-snow"},
+            {"brand": "Goodyear", "model": "UltraGrip 9+", "link": "https://www.goodyear.com/en_US/tires/ultra-grip-9/24476.html"},
+            {"brand": "Pirelli", "model": "Winter Sottozero", "link": "https://www.pirelli.com/tyres/en-ww/car/catalogue/product/winter-sottozero-3"},
+            {"brand": "Apollo", "model": "Alnac Winter", "link": "https://www.apollotyres.com/en-gb/car-suv-tyres/products/874-ALNAC-4G-WINTER/"}
         ]
     },
     "sandy": {
         "footwear": [
-            {"brand": "Adidas", "model": "Terrex Voyager", "link": "https://www.adidas.com/terrex-voyager"},
-            {"brand": "Quechua", "model": "NH150", "link": "https://www.decathlon.in/nh150"},
-            {"brand": "Merrell", "model": "All Out Blaze Sieve", "link": "https://www.merrell.com/alloutblaze"},
-            {"brand": "Keen", "model": "Newport H2", "link": "https://www.keenfootwear.com/newport"},
-            {"brand": "Columbia", "model": "Drainmaker IV", "link": "https://www.columbia.com/drainmaker"}
+            {"brand": "Adidas", "model": "Terrex Voyager", "link": "https://www.adidas.com/om/en/terrex-voyager-21-travel-shoes/JI1029.html"},
+            {"brand": "Forclaz", "model": "Desert 900", "link": "https://www.decathlon.in/p/8579866/unisex-desert-trekking-high-top-anti-sand-boots-desert-900"},
+            {"brand": "Lowa", "model": "Zephyr GTX MID TF", "link": "https://www.lowaboots.com/products/zephyr-gtx-mid-tf-black?variant=49454555857216"},
+            {"brand": "Keen", "model": "Newport H2", "link": "https://www.keenfootwear.ca/collections/newport/products/mens-newport-h2-monochrome-safari"},
+            {"brand": "Columbia", "model": "Drainmaker IV", "link": "https://www.columbiasportswear.co.in/products/drainmaker-iv-bm4617-023"}
         ],
         "tyres": [
-            {"brand": "BFGoodrich", "model": "All-Terrain T/A KO2", "link": "https://www.bfgoodrichtires.com/ko2"},
-            {"brand": "Apollo", "model": "Apterra Cross", "link": "https://www.apollotyres.com/apterra-cross"},
-            {"brand": "Yokohama", "model": "Geolandar A/T G015", "link": "https://www.yokohamatire.com/geolandar-at-g015"},
-            {"brand": "Michelin", "model": "LTX Trail", "link": "https://www.michelinman.com/ltx-trail"},
-            {"brand": "MRF", "model": "Wanderer Sport", "link": "https://www.mrftyres.com/wanderer-sport"}
+            {"brand": "BFGoodrich", "model": "All-Terrain T/A KO2", "link": "https://www.bfgoodrich.in/auto/tyres/all-terrain-t-a-ko2"},
+            {"brand": "Apollo", "model": "Apterra Cross", "link": "https://shop.apollotyres.com/apterra-cross"},
+            {"brand": "Yokohama", "model": "Geolandar A/T G015", "link": "https://www.yokohama-india.com/product/features/geolandar-at-g015"},
+            {"brand": "Michelin", "model": "LTX Trail", "link": "https://www.michelin.in/auto/tyres/michelin-ltx-trail"},
+            {"brand": "MRF", "model": "Wanderer Sport", "link": "https://www.mrftyres.com/product/passenger-cars/215-65r16-98h-tl-wanderer-sport"}
         ]
     },
     "urban": {
         "footwear": [
-            {"brand": "Nike", "model": "Air Zoom Pegasus 40", "link": "https://www.nike.com/t/air-zoom-pegasus-40"},
-            {"brand": "Adidas", "model": "Ultraboost Light", "link": "https://www.adidas.com/ultraboost-light"},
+            {"brand": "Nike", "model": "Air Zoom Pegasus 40", "link": "https://www.nike.com/in/t/pegasus-40-road-running-shoes-3JpHzl"},
+            {"brand": "Adidas", "model": "Ultraboost", "link": "https://www.adidas.co.in/ultraboost"},
             {"brand": "New Balance", "model": "Fresh Foam 1080", "link": "https://www.newbalance.com/fresh-foam-1080"},
-            {"brand": "Puma", "model": "Velocity Nitro 2", "link": "https://in.puma.com/velocity-nitro-2"},
-            {"brand": "ASICS", "model": "Gel-Kayano 30", "link": "https://www.asics.com/gel-kayano-30"}
+            {"brand": "Puma", "model": "Velocity Nitro 2", "link": "https://in.puma.com/in/en/pd/velocity-nitro-2-mens-running-shoes/195337"},
+            {"brand": "ASICS", "model": "Gel-Kayano", "link": "https://www.asics.com/us/en-us/gel-kayano/c/aa50101000/"}
         ],
         "tyres": [
             {"brand": "Michelin", "model": "Primacy 4 ST", "link": "https://www.michelin.in/auto/tyres/michelin-primacy-4-st"},
-            {"brand": "Bridgestone", "model": "Turanza T005", "link": "https://www.bridgestone.com/turanza-t005"},
-            {"brand": "Apollo", "model": "Amazer 4G Life", "link": "https://www.apollotyres.com/amazer-4g-life"},
-            {"brand": "MRF", "model": "ZLX", "link": "https://www.mrftyres.com/car-tyres/zlx"},
-            {"brand": "Goodyear", "model": "Assurance TripleMax 2", "link": "https://www.goodyear.co.in/assurance-triplemax-2"}
+            {"brand": "Bridgestone", "model": "Turanza T005", "link": "https://www.bridgestone.co.in/passenger-tyres/turanza-tyres/t005-rft-t005a"},
+            {"brand": "Apollo", "model": "Amazer 4G Life", "link": "https://www.apollotyres.com/en-in/car-suv-tyres/products/1238-AMAZER-4G-LIFE/"},
+            {"brand": "MRF", "model": "ZLO", "link": "https://www.mrftyres.com/product/passenger-cars/185-70r14-88t-tl-zlo?type=all"},
+            {"brand": "Goodyear", "model": "Assurance TripleMax 2", "link": "https://www.goodyear.co.in/tyres/goodyear-assurance-triplemax-2"}
         ]
     }
 }

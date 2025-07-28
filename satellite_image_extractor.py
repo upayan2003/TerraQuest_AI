@@ -43,6 +43,7 @@ def mask_s2_clouds(image):
 def get_satellite_patch(lat, lon, size_px=256, scale=10, bands=['B4', 'B3', 'B2'], output_path=None):
     """
     Fetches a 256x256 satellite image patch centered on the lat/lon.
+    Also returns mean NDBI value of the patch.
 
     Returns:
         - np.ndarray image (H x W x C)
@@ -60,31 +61,39 @@ def get_satellite_patch(lat, lon, size_px=256, scale=10, bands=['B4', 'B3', 'B2'
     end_date = today.replace(day=1).strftime("%Y-%m-%d")
 
     # Choose a Sentinel-2 SR image with low cloud cover
+    collection = (ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+                .filterBounds(region)
+                .filterDate(start_date, end_date)
+                .map(mask_s2_clouds))
 
-    collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') \
-                  .filterBounds(region) \
-                  .filterDate(start_date, end_date) \
-                  .map(mask_s2_clouds)
-
-    image = collection.sort('CLOUDY_PIXEL_PERCENTAGE').first().select(bands).clip(region)
-
-    # collection = (
-    #     ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
-    #     .filterBounds(region)
-    #     .filterDate('2025-01-01', '2025-06-01')
-    #     .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 10))
-    #     .map(mask_s2_clouds)
-    #     .sort('system:time_start', False)  # most recent first
-    # )
-
-    # image = collection.first().select(bands).clip(region)
+    # Fetch image with required bands
+    image = collection.sort('CLOUDY_PIXEL_PERCENTAGE').first().select(['B2', 'B3', 'B4']).clip(region)
 
     if image is None:
         raise ValueError("No suitable image found for the specified location and date range.")
 
-    vis_image = image.visualize(min=0, max=3000, bands=bands)
+    # Load VIIRS Nighttime Lights data
+    nightlight_img = (ee.ImageCollection("NOAA/VIIRS/DNB/MONTHLY_V1/VCMCFG")
+                    .filterBounds(region)
+                    .filterDate(start_date, end_date)
+                    .select("avg_rad")
+                    .mean()  # mean over the month(s)
+                    .clip(region))
 
-    # Export using geemap
+    # Compute mean nightlight radiance in region
+    nightlight_stat = nightlight_img.reduceRegion(
+        reducer=ee.Reducer.mean(),
+        geometry=region,
+        scale=500,  # VIIRS resolution
+        maxPixels=1e9
+    )
+
+    # Extract radiance value
+    nightlight = nightlight_stat.get('avg_rad').getInfo() if nightlight_stat.get('avg_rad') else 0
+
+    # Visualize RGB image
+    vis_image = image.select(['B4', 'B3', 'B2']).visualize(min=0, max=3000)
+
     temp_file = 'patch.tif'
     geemap.ee_export_image(
         vis_image,
@@ -107,11 +116,10 @@ def get_satellite_patch(lat, lon, size_px=256, scale=10, bands=['B4', 'B3', 'B2'
 
         os.remove(temp_file)
 
-        return img_resized
+        return img_resized, nightlight
 
     except Exception as e:
         raise RuntimeError(f"Failed to load image: {e}")
-
 
 # Example usage
 if __name__ == "__main__":
@@ -122,7 +130,8 @@ if __name__ == "__main__":
     lat, lon = map(float, coords.split(','))
 
     try:
-        img_array = get_satellite_patch(lat, lon, output_path='patch.png')
+        img_array, nlight = get_satellite_patch(lat, lon, output_path='patch.png')
         print("Patch shape:", img_array.shape)  # Should be (256, 256, 3)
+        print("Nightlight Radiance:", nlight)
     except Exception as e:
         print(f"Error fetching patch: {e}. Input valid land coordinates.")
