@@ -3,6 +3,7 @@ from satellite_image_extractor import authenticate_earth_engine, get_satellite_p
 from weather_heuristics import Weather
 import cv2
 import json
+import requests
 import os
 import folium
 import streamlit as st
@@ -18,6 +19,26 @@ def load_catalog(file_path):
     except Exception as e:
         st.error(f"Error loading catalog: {e}")
         return {}
+
+# -------------------- Download Model from Hugging Face --------------------
+@st.cache_data(show_spinner="Downloading model...")
+def download_model(hf_url: str, filename: str) -> str:
+    if not os.path.exists(filename):
+        response = requests.get(hf_url, stream=True)
+        with open(filename, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+    return filename
+
+HF_MODEL_URLS = {
+    "ground": "https://huggingface.co/upayan2003/TerrainClassifiers/resolve/main/terrain_classifier_ground.pth",
+    "satellite": "https://huggingface.co/upayan2003/TerrainClassifiers/resolve/main/terrain_classifier_satellite.pth"
+}
+
+def get_model_path(input_type):
+    filename = f"terrain_classifier_{input_type}.pth"
+    hf_url = HF_MODEL_URLS[input_type]
+    return download_model(hf_url, filename)
 
 # -------------------- Load Custom CSS --------------------
 
@@ -48,8 +69,8 @@ def main():
             with open(image_path, "wb") as f:
                 f.write(uploaded_image.read())
 
-            model_path = "terrain_classifier_ground.pth"
-            data_dir = "Dataset/ground_images"
+            model_path = get_model_path(input_type)
+            data_dir = "TerrainDataset/Dataset/ground_images"
             _, _, class_names = get_dataloaders(data_dir)
 
             prediction, confidences = predict_image(image_path, model_path, class_names, input_type='ground')
@@ -114,8 +135,8 @@ def main():
                 _, nightlight = get_satellite_patch(lat, lon, output_path=image_path)
 
                 if os.path.exists(image_path):
-                    model_path = "terrain_classifier_satellite.pth"
-                    data_dir = "Dataset/satellite_images"
+                    model_path = get_model_path(input_type)
+                    data_dir = "TerrainDataset/Dataset/satellite_images"
                     _, _, class_names = get_dataloaders(data_dir)
 
                     prediction, confidences = predict_image(image_path, model_path, class_names, input_type='satellite')
