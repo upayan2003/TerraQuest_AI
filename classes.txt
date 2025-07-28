@@ -1,0 +1,6 @@
+muddy
+rocky
+sandy
+snowy
+urban
+vegetated
