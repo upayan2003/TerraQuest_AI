@@ -36,7 +36,7 @@ HF_MODEL_URLS = {
 }
 
 def get_model_path(model_type):
-    filename = f"terrain_classifier_{input_type}.pth"
+    filename = f"terrain_classifier_{model_type}.pth"
     hf_url = HF_MODEL_URLS[model_type]
     return download_model(hf_url, filename)
 
