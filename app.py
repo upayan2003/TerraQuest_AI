@@ -41,7 +41,6 @@ def get_model_path(input_type):
     return download_model(hf_url, filename)
 
 # -------------------- Load Custom CSS --------------------
-
 with open('style.css') as f:
     st.write(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
