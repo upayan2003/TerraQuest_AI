@@ -37,7 +37,7 @@ HF_MODEL_URLS = {
 
 def get_model_path(input_type):
     filename = f"terrain_classifier_{input_type}.pth"
-    hf_url = HF_MODEL_URLS[input_type]
+    hf_url = HF_MODEL_URLS[model_type]
     return download_model(hf_url, filename)
 
 # -------------------- Load Custom CSS --------------------
@@ -68,7 +68,7 @@ def main():
             with open(image_path, "wb") as f:
                 f.write(uploaded_image.read())
 
-            model_path = get_model_path(input_type)
+            model_path = get_model_path("ground")
             data_dir = "TerrainDataset/Dataset/ground_images"
             _, _, class_names = get_dataloaders(data_dir)
 
@@ -134,7 +134,7 @@ def main():
                 _, nightlight = get_satellite_patch(lat, lon, output_path=image_path)
 
                 if os.path.exists(image_path):
-                    model_path = get_model_path(input_type)
+                    model_path = get_model_path("satellite")
                     data_dir = "TerrainDataset/Dataset/satellite_images"
                     _, _, class_names = get_dataloaders(data_dir)
 
