@@ -4,7 +4,7 @@ import tempfile
 import geemap
 import numpy as np
 from datetime import datetime, timedelta
-import cv2  
+import cv2
 import os
 
 # Authenticate with Earth Engine using service account
@@ -17,10 +17,10 @@ def authenticate_earth_engine(gcloud_json_str):
         tmpfile.write(gcloud_json_str)
         tmpfile.flush()
 
-        credentials = ee.ServiceAccountCredentials(
-            service_account=json.loads(gcloud_json_str)["client_email"],
-            key_file=tmpfile.name
-        )
+        SERVICE_ACCOUNT = json.loads(gcloud_json_str)["client_email"]
+        KEY_FILE = tmpfile.name
+
+        credentials = ee.ServiceAccountCredentials(SERVICE_ACCOUNT, KEY_FILE)
 
         ee.Initialize(credentials)
         print("Authenticated and Earth Engine initialized.")
