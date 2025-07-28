@@ -35,7 +35,7 @@ HF_MODEL_URLS = {
     "satellite": "https://huggingface.co/upayan2003/TerrainClassifiers/resolve/main/terrain_classifier_satellite.pth"
 }
 
-def get_model_path(input_type):
+def get_model_path(model_type):
     filename = f"terrain_classifier_{input_type}.pth"
     hf_url = HF_MODEL_URLS[model_type]
     return download_model(hf_url, filename)
