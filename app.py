@@ -63,7 +63,7 @@ def main():
             st.caption("Confidence Scores - " + " | ".join(f"{cls.capitalize()}: {conf}" for cls, conf in sorted_confidences))
 
     elif input_type == "Coordinates":
-        authenticate_earth_engine()
+        authenticate_earth_engine(st.secrets["gcp"]["gcloud_json"])
 
         st.subheader("Select Coordinates")
 

@@ -1,4 +1,5 @@
 import ee
+import json
 import geemap
 import numpy as np
 from datetime import datetime, timedelta
@@ -6,15 +7,17 @@ import cv2
 import os
 
 # Authenticate with Earth Engine using service account
-def authenticate_earth_engine():
+def authenticate_earth_engine(gcloud_json_str):
     """
     Authenticate with Earth Engine using a service account.
     Ensure you have the service account JSON key file.
     """
-    SERVICE_ACCOUNT = 'gee-webapp@ee-upayan2003.iam.gserviceaccount.com'
-    KEY_FILE = 'ee-upayan2003-3fb46ffa3e11.json'
+    service_account_info = json.loads(gcloud_json_str)
 
-    credentials = ee.ServiceAccountCredentials(SERVICE_ACCOUNT, KEY_FILE)
+    credentials = ee.ServiceAccountCredentials(
+        email=service_account_info["client_email"],
+        key_dict=service_account_info
+    )
     ee.Initialize(credentials)
 
     print("Authenticated and Earth Engine initialized.")
