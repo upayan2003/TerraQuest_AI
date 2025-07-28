@@ -1,26 +1,29 @@
 import ee
 import json
+import tempfile
 import geemap
 import numpy as np
 from datetime import datetime, timedelta
-import cv2
+import cv2  
 import os
 
 # Authenticate with Earth Engine using service account
 def authenticate_earth_engine(gcloud_json_str):
     """
-    Authenticate with Earth Engine using a service account.
-    Ensure you have the service account JSON key file.
+    Authenticate with Earth Engine using a service account JSON string.
     """
-    service_account_info = json.loads(gcloud_json_str)
+    # Write the JSON string to a temporary file
+    with tempfile.NamedTemporaryFile(mode="w+", suffix=".json", delete=False) as tmpfile:
+        tmpfile.write(gcloud_json_str)
+        tmpfile.flush()
 
-    credentials = ee.ServiceAccountCredentials(
-        email=service_account_info["client_email"],
-        key_dict=service_account_info
-    )
-    ee.Initialize(credentials)
+        credentials = ee.ServiceAccountCredentials(
+            service_account=json.loads(gcloud_json_str)["client_email"],
+            key_file=tmpfile.name
+        )
 
-    print("Authenticated and Earth Engine initialized.")
+        ee.Initialize(credentials)
+        print("Authenticated and Earth Engine initialized.")
 
 # Function to mask clouds in Sentinel-2 images
 
