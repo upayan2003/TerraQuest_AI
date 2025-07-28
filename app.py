@@ -49,7 +49,7 @@ import streamlit as st
 @st.cache_data(show_spinner="Downloading dataset...")
 def download_dataset(hf_url: str, extract_to: str = "data") -> str:
     os.makedirs(extract_to, exist_ok=True)
-    zip_path = os.path.join(extract_to, "TerrainDataset.zip")
+    zip_path = os.path.join(extract_to, "TerrainClassification.zip")
 
     # Download only if not already present
     if not os.path.exists(zip_path):
@@ -60,10 +60,10 @@ def download_dataset(hf_url: str, extract_to: str = "data") -> str:
 
     dataset_root = os.path.join(extract_to, "Dataset")
     
-    # # Extract only if not already extracted
-    # if not os.path.exists(dataset_root):
-    #     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-    #         zip_ref.extractall(extract_to)
+    # Extract only if not already extracted
+    if not os.path.exists(dataset_root):
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(extract_to)
 
     return dataset_root
     
