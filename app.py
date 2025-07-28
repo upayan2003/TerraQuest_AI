@@ -60,10 +60,10 @@ def download_dataset(hf_url: str, extract_to: str = "data") -> str:
 
     dataset_root = os.path.join(extract_to, "Dataset")
     
-    # Extract only if not already extracted
-    if not os.path.exists(dataset_root):
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            zip_ref.extractall(extract_to)
+    # # Extract only if not already extracted
+    # if not os.path.exists(dataset_root):
+    #     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+    #         zip_ref.extractall(extract_to)
 
     return dataset_root
     
