@@ -238,7 +238,7 @@ def main():
                         st.error("Satellite patch could not be saved. Please try again.")
                         
             except Exception as e:
-                st.error(f"Error: {e}. Please make sure the coordinates are on land.")
+                st.error(f"{e} Please make sure the coordinates are on land.")
 
         if "prediction" in st.session_state:
             image_path = st.session_state["image_path"]
