@@ -82,7 +82,7 @@ def main():
         st.warning("No gear catalog found. Please check the file.")
         return
 
-    input_type = st.radio("Choose Input Type:", ["Ground Image", "Coordinates"], horizontal=True)
+    input_type = st.radio("Choose Input Type:", ["Ground Image", "Coordinates"], horizontal=True, key="image_input_radio")
 
     prediction = ""
     condition = None
@@ -115,7 +115,7 @@ def main():
             # -------------------- Feedback & Recommendation Section --------------------
             # User feedback
             st.markdown("### Is the prediction correct?")
-            user_feedback = st.radio("Please confirm:", ["Yes", "No"], horizontal=True)
+            user_feedback = st.radio("Please confirm:", ["Yes", "No"], horizontal=True, key="user_feedback_ground_radio")
 
             # Initial predicted classes
             predicted_classes = prediction.split("&")
@@ -157,7 +157,7 @@ def main():
 
         st.subheader("Select Coordinates")
 
-        coord_input_mode = st.radio("How would you like to input coordinates?", ["Enter manually", "Choose on map"], horizontal=True)
+        coord_input_mode = st.radio("How would you like to input coordinates?", ["Enter manually", "Choose on map"], horizontal=True, key="coord_input_radio")
 
         lat, lon = None, None
 
@@ -256,7 +256,7 @@ def main():
     # -------------------- Feedback & Recommendation Section --------------------
         # User feedback
         st.markdown("### Is the prediction correct?")
-        user_feedback = st.radio("Please confirm:", ["Yes", "No"], horizontal=True)
+        user_feedback = st.radio("Please confirm:", ["Yes", "No"], horizontal=True, key="user_feedback_satellite_radio")
 
         # Initial predicted classes
         predicted_classes = prediction.split("&")
