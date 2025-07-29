@@ -204,37 +204,41 @@ def main():
 
         # Button triggers everything below
         if lat is not None and lon is not None:
-            if st.button("Classify Terrain from Coordinates"):
-                image_path = "patch.png"
-                _, nightlight = get_satellite_patch(lat, lon, output_path=image_path)
+            try:
+                if st.button("Classify Terrain from Coordinates"):
+                    image_path = "patch.png"
+                    _, nightlight = get_satellite_patch(lat, lon, output_path=image_path)
 
-                if os.path.exists(image_path):
-                    model_path = get_model_path("satellite")
-                    data_dir = os.path.join(dataset_root, "satellite_images")
-                    _, _, class_names = get_dataloaders(data_dir)
+                    if os.path.exists(image_path):
+                        model_path = get_model_path("satellite")
+                        data_dir = os.path.join(dataset_root, "satellite_images")
+                        _, _, class_names = get_dataloaders(data_dir)
 
-                    prediction, confidences = predict_image(image_path, model_path, class_names, input_type='satellite')
+                        prediction, confidences = predict_image(image_path, model_path, class_names, input_type='satellite')
 
-                    # Heuristic: Override rocky → urban if nightlight is more than 7
-                    apply_heuristic_note = False
-                    if prediction == "rocky" and nightlight > 7:
-                        prediction = "urban"
-                        apply_heuristic_note = True
+                        # Heuristic: Override rocky → urban if nightlight is more than 7
+                        apply_heuristic_note = False
+                        if prediction == "rocky" and nightlight > 7:
+                            prediction = "urban"
+                            apply_heuristic_note = True
 
-                    # Weather integration
-                    API_KEY = st.secrets["gcp"]["weather_api"]
-                    condition, location_weather = Weather(API_KEY).assess_terrain_condition(lat, lon)
+                        # Weather integration
+                        API_KEY = st.secrets["gcp"]["weather_api"]
+                        condition, location_weather = Weather(API_KEY).assess_terrain_condition(lat, lon)
 
-                    # Store in session
-                    st.session_state["image_path"] = image_path
-                    st.session_state["prediction"] = prediction
-                    st.session_state["confidences"] = confidences
-                    st.session_state["apply_heuristic_note"] = apply_heuristic_note
-                    st.session_state["condition"] = condition
-                    st.session_state["weather_summary"] = location_weather
+                        # Store in session
+                        st.session_state["image_path"] = image_path
+                        st.session_state["prediction"] = prediction
+                        st.session_state["confidences"] = confidences
+                        st.session_state["apply_heuristic_note"] = apply_heuristic_note
+                        st.session_state["condition"] = condition
+                        st.session_state["weather_summary"] = location_weather
 
-                else:
-                    st.error("Satellite patch could not be saved. Please try again.")
+                    else:
+                        st.error("Satellite patch could not be saved. Please try again.")
+                        
+            except Exception as e:
+                st.error(f"Error: {e}. Please make sure the coordinates are on land.")
 
         if "prediction" in st.session_state:
             image_path = st.session_state["image_path"]
