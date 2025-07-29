@@ -71,6 +71,29 @@ def download_dataset(hf_url: str, extract_to: str = "data") -> str:
 with open('style.css') as f:
     st.write(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+# -------------------- Recommend Items Based on Terrain --------------------
+def recommend_items(catalog, classes):
+    item_type = st.selectbox("Get recommendations for:", ["Footwear", "Tyres"], key="recommendation_selectbox")
+
+    items = []
+    seen = set()
+    for terrain_key in classes:
+        terrain_items = catalog.get(terrain_key, {}).get(item_type.lower(), [])
+        for item in terrain_items:
+            key = (item['brand'], item['model'])
+            if key not in seen:
+                seen.add(key)
+                items.append(item)
+
+    if items:
+        st.subheader(f"Top {len(items)} recommended {item_type} for this terrain:")
+        for i, item in enumerate(items, 1):
+            st.markdown(f"**{i}. {item['brand']} - {item['model']}**")
+            st.markdown(f"[View Item]({item['link']})")
+    else:
+        st.warning("No recommendations found for this terrain.")
+
+
 # -------------------- Main App --------------------
 def main():
     st.title("TerraQuest AI")
@@ -130,27 +153,9 @@ def main():
                 if manual_selection:
                     predicted_classes = [cls.lower() for cls in manual_selection]
 
-            item_type = st.selectbox("Get recommendations for:", ["Footwear", "Tyres"])
-
             st.markdown(f"**Final Terrain Classes:** {', '.join((i.capitalize() for i in predicted_classes))}")
 
-            items = []
-            seen = set()
-            for terrain_key in predicted_classes:
-                terrain_items = catalog.get(terrain_key, {}).get(item_type.lower(), [])
-                for item in terrain_items:
-                    key = (item['brand'], item['model'])
-                    if key not in seen:
-                        seen.add(key)
-                        items.append(item)
-
-            if items:
-                st.subheader(f"Top {len(items)} recommended {item_type} for this terrain:")
-                for i, item in enumerate(items, 1):
-                    st.markdown(f"**{i}. {item['brand']} - {item['model']}**")
-                    st.markdown(f"[View Item]({item['link']})")
-            else:
-                st.warning("No recommendations found for this terrain.")
+            recommend_items(catalog, predicted_classes)
 
     elif input_type == "Coordinates":
         authenticate_earth_engine(st.secrets["gcp"]["gcloud_json"])
@@ -280,27 +285,9 @@ def main():
                     if any(t in ["rocky", "vegetated", "sandy", "urban"] for t in predicted_classes) and "snowy" not in predicted_classes:
                         predicted_classes.insert(0, "snowy")
 
-            item_type = st.selectbox("Get recommendations for:", ["Footwear", "Tyres"])
-
             st.markdown(f"**Final Terrain Classes:** {', '.join((i.capitalize() for i in predicted_classes))}")
 
-            items = []
-            seen = set()
-            for terrain_key in predicted_classes:
-                terrain_items = catalog.get(terrain_key, {}).get(item_type.lower(), [])
-                for item in terrain_items:
-                    key = (item['brand'], item['model'])
-                    if key not in seen:
-                        seen.add(key)
-                        items.append(item)
-
-            if items:
-                st.subheader(f"Top {len(items)} recommended {item_type} for this terrain:")
-                for i, item in enumerate(items, 1):
-                    st.markdown(f"**{i}. {item['brand']} - {item['model']}**")
-                    st.markdown(f"[View Item]({item['link']})")
-            else:
-                st.warning("No recommendations found for this terrain.")
+            recommend_items(catalog, predicted_classes)
 
 if __name__ == "__main__":
     main()
