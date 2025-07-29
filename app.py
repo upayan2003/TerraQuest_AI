@@ -217,8 +217,7 @@ def main():
                         apply_heuristic_note = True
 
                     # Weather integration
-                    with open("WeatherAPI_Key.txt", "r") as f:
-                        API_KEY = f.read().strip()
+                    API_KEY = st.secrets["gcp"]["weather_api"]
                     condition, location_weather = Weather(API_KEY).assess_terrain_condition(lat, lon)
 
                     # Store in session
