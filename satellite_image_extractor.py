@@ -6,6 +6,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import cv2
 import os
+import streamlit as st
 
 # Authenticate with Earth Engine using service account
 def authenticate_earth_engine(gcloud_json_str):
@@ -81,7 +82,7 @@ def get_satellite_patch(lat, lon, size_px=256, scale=10, bands=['B4', 'B3', 'B2'
     # Load VIIRS Nighttime Lights data
     nightlight_img = (ee.ImageCollection("NOAA/VIIRS/DNB/MONTHLY_V1/VCMCFG")
                     .filterBounds(region)
-                    .filterDate(start_date, end_date)
+                    .filterDate("2024-01-01", "2025-01-01")
                     .select("avg_rad")
                     .mean()  # mean over the month(s)
                     .clip(region))
@@ -95,6 +96,7 @@ def get_satellite_patch(lat, lon, size_px=256, scale=10, bands=['B4', 'B3', 'B2'
     )
 
     # Extract radiance value
+    print("Nightlight keys:", nightlight_stat.keys())
     nightlight = nightlight_stat.get('avg_rad').getInfo() if nightlight_stat.get('avg_rad') else 0
 
     # Visualize RGB image
@@ -129,7 +131,7 @@ def get_satellite_patch(lat, lon, size_px=256, scale=10, bands=['B4', 'B3', 'B2'
 
 # Example usage
 if __name__ == "__main__":
-    authenticate_earth_engine()
+    authenticate_earth_engine(st.secrets["gcp"]["gcloud_json"])
     
     # Get coordinates from user input
     coords = input("Enter coordinates (lat, lon): ")
@@ -139,5 +141,6 @@ if __name__ == "__main__":
         img_array, nlight = get_satellite_patch(lat, lon, output_path='patch.png')
         print("Patch shape:", img_array.shape)  # Should be (256, 256, 3)
         print("Nightlight Radiance:", nlight)
+        
     except Exception as e:
         print(f"Error fetching patch: {e}. Input valid land coordinates.")
