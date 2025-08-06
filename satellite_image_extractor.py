@@ -67,6 +67,9 @@ def get_satellite_patch(lat, lon, size_px=256, scale=10, bands=['B4', 'B3', 'B2'
     start_date = four_months_ago.strftime("%Y-%m-%d")
     end_date = today.replace(day=1).strftime("%Y-%m-%d")
 
+    nl_start_date = (today.replace(day=1) - timedelta(days=395)).replace(day=1).strftime("%Y-%m-%d")
+    nl_end_date = (today.replace(day=1) - timedelta(days=30)).replace(day=1).strftime("%Y-%m-%d")
+
     # Choose a Sentinel-2 SR image with low cloud cover
     collection = (ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
                 .filterBounds(region)
@@ -82,7 +85,7 @@ def get_satellite_patch(lat, lon, size_px=256, scale=10, bands=['B4', 'B3', 'B2'
     # Load VIIRS Nighttime Lights data
     nightlight_img = (ee.ImageCollection("NOAA/VIIRS/DNB/MONTHLY_V1/VCMCFG")
                     .filterBounds(region)
-                    .filterDate("2024-01-01", "2025-01-01")
+                    .filterDate(nl_start_date, nl_end_date)
                     .select("avg_rad")
                     .mean()  # mean over the month(s)
                     .clip(region))
@@ -96,7 +99,6 @@ def get_satellite_patch(lat, lon, size_px=256, scale=10, bands=['B4', 'B3', 'B2'
     )
 
     # Extract radiance value
-    print("Nightlight keys:", nightlight_stat.keys())
     nightlight = nightlight_stat.get('avg_rad').getInfo() if nightlight_stat.get('avg_rad') else 0
 
     # Visualize RGB image
