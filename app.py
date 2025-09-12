@@ -162,29 +162,34 @@ def main():
 
         st.subheader("Select Coordinates")
 
-        coord_input_mode = st.radio("How would you like to input coordinates?", ["Enter manually", "Choose on map"], horizontal=True, key="coord_input_radio")
+        # -------------------- Coordinate Input Modes --------------------
+        coord_input_mode = st.radio(
+            "How would you like to input coordinates?",
+            ["Search by Place Name", "Choose on map", "Enter manually"],
+            horizontal=True,
+            key="coord_input_radio"
+        )
 
         lat, lon = None, None
 
+        # -------------------- Enter Manually --------------------
         if coord_input_mode == "Enter manually":
             lat = st.number_input("Latitude", format="%.6f")
             lon = st.number_input("Longitude", format="%.6f")
 
+        # -------------------- Choose on Map --------------------
         elif coord_input_mode == "Choose on map":
             st.subheader("**Click on the map below to pick coordinates:**")
 
-            # Default center of the map (India)
             m = folium.Map(location=[20.5937, 78.9629], zoom_start=4)
             m.add_child(folium.LatLngPopup())
 
-            # Get map interaction
             map_click = st_folium(m, height=400, returned_objects=["last_clicked"], key="map")
 
             if map_click and map_click["last_clicked"]:
                 lat = map_click["last_clicked"]["lat"]
                 lon = map_click["last_clicked"]["lng"]
 
-                # Re-render map with marker
                 m = folium.Map(
                     location=[lat, lon],
                     zoom_start=10,
@@ -202,7 +207,51 @@ def main():
 
                 st.markdown(f"**Selected Coordinates**: {lat:.6f}, {lon:.6f}")
 
-        # Button triggers everything below
+        # -------------------- Search by Place Name --------------------
+        elif coord_input_mode == "Search by Place Name":
+
+            def search_place(query: str, limit: int = 5):
+                url = "https://nominatim.openstreetmap.org/search"
+                params = {"q": query, "format": "json", "limit": limit}
+                headers = {"User-Agent": "streamlit-app"}
+                response = requests.get(url, params=params, headers=headers)
+                return response.json() if response.status_code == 200 else []
+
+            search_query = st.text_input("Enter the name of a place:")
+
+            if search_query:
+                results = search_place(search_query)
+
+                if results:
+                    place_names = [f"{r['display_name']}" for r in results]
+                    selected = st.selectbox("Select a place:", place_names)
+                    chosen_place = results[place_names.index(selected)]
+
+                    if chosen_place:
+                        lat, lon = float(chosen_place['lat']), float(chosen_place['lon'])
+
+                        m = folium.Map(
+                            location=[lat, lon],
+                            zoom_start=10,
+                            control_scale=False,
+                            zoom_control=False,
+                            dragging=False,
+                            scrollWheelZoom=False,
+                            doubleClickZoom=False
+                        )
+
+                        folium.Marker([lat, lon], popup=f"Selected Location: ({lat:.6f}, {lon:.6f})").add_to(m)
+                        m.add_child(folium.LatLngPopup())
+
+                        st.subheader("Selected Location Preview")
+                        st_folium(m, height=400, key="map_with_marker")
+
+                        st.markdown(f"**Selected Coordinates**: {lat:.6f}, {lon:.6f}")
+
+                else:
+                    st.warning("No results found. Try another query.")
+
+        # -------------------- Continue Pipeline if lat/lon available --------------------
         if lat is not None and lon is not None:
             try:
                 if st.button("Classify Terrain from Coordinates"):
@@ -214,25 +263,26 @@ def main():
                         data_dir = os.path.join(dataset_root, "satellite_images")
                         _, _, class_names = get_dataloaders(data_dir)
 
-                        prediction, confidences = predict_image(image_path, model_path, class_names, input_type='satellite')
+                        prediction, confidences = predict_image(
+                            image_path, model_path, class_names, input_type='satellite'
+                        )
 
-                        # Heuristic: Override rocky → urban if nightlight is more than 7
                         apply_heuristic_note = False
                         if prediction == "rocky" and nightlight > 7:
                             prediction = "urban"
                             apply_heuristic_note = True
 
-                        # Weather integration
                         API_KEY = st.secrets["gcp"]["weather_api"]
                         condition, location_weather = Weather(API_KEY).assess_terrain_condition(lat, lon)
 
-                        # Store in session
-                        st.session_state["image_path"] = image_path
-                        st.session_state["prediction"] = prediction
-                        st.session_state["confidences"] = confidences
-                        st.session_state["apply_heuristic_note"] = apply_heuristic_note
-                        st.session_state["condition"] = condition
-                        st.session_state["weather_summary"] = location_weather
+                        st.session_state.update({
+                            "image_path": image_path,
+                            "prediction": prediction,
+                            "confidences": confidences,
+                            "apply_heuristic_note": apply_heuristic_note,
+                            "condition": condition,
+                            "weather_summary": location_weather
+                        })
 
                     else:
                         st.error("Satellite patch could not be saved. Please try again.")
@@ -280,7 +330,7 @@ def main():
                 if manual_selection:
                     predicted_classes = [cls.lower() for cls in manual_selection]
 
-            # Weather heuristics
+            # -------------------- Weather Heuristics --------------------
             elif condition and user_feedback == "Yes":
                 if condition == "Mud Prone":
                     if any(t in ["rocky", "vegetated", "sandy", "urban"] for t in predicted_classes) and "muddy" not in predicted_classes:
