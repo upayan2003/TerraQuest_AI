@@ -5,6 +5,7 @@ import cv2
 import json
 import requests
 import os
+import zipfile
 import folium
 import streamlit as st
 from streamlit_folium import st_folium
@@ -39,11 +40,6 @@ def get_model_path(model_type):
     filename = f"terrain_classifier_{model_type}.pth"
     hf_url = HF_MODEL_URLS[model_type]
     return download_model(hf_url, filename)
-
-import os
-import requests
-import zipfile
-import streamlit as st
 
 # -------------------- Download and Extract Dataset --------------------
 @st.cache_data(show_spinner="Downloading dataset...")
@@ -312,7 +308,7 @@ def main():
 
             st.info(f"Terrain Condition: **{condition}**")
 
-        # -------------------- Feedback & Recommendation Section --------------------
+            # -------------------- Feedback & Recommendation Section --------------------
             # User feedback
             st.markdown("### Is the prediction correct?")
             user_feedback = st.radio("Please confirm:", ["Yes", "No"], horizontal=True, key="user_feedback_satellite_radio")

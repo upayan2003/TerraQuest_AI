@@ -1,4 +1,4 @@
-# Terrain Classification App
+# TerraQuest AI: A Terrain Classification & Gear Recommendation App
 
 This is a Streamlit web application that performs terrain classification from either ground-level images or satellite patches. It recommends appropriate gear (shoes or tyres) based on terrain types like `rocky`, `muddy`, `sandy`, etc.
 
