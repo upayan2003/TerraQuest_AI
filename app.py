@@ -1,7 +1,6 @@
 from terrain_classification_model import get_dataloaders, predict_image
 from satellite_image_extractor import authenticate_earth_engine, get_satellite_patch
 from weather_heuristics import Weather
-import cv2
 import json
 import requests
 import os
@@ -9,7 +8,6 @@ import zipfile
 import folium
 import streamlit as st
 from streamlit_folium import st_folium
-import matplotlib.pyplot as plt
 
 # -------------------- Load Gear Catalog --------------------
 @st.cache_data
@@ -47,7 +45,6 @@ def download_dataset(hf_url: str, extract_to: str = "data") -> str:
     os.makedirs(extract_to, exist_ok=True)
     zip_path = os.path.join(extract_to, "TerrainClassification.zip")
 
-    # Download only if not already present
     if not os.path.exists(zip_path):
         response = requests.get(hf_url, stream=True)
         with open(zip_path, "wb") as f:
@@ -56,7 +53,6 @@ def download_dataset(hf_url: str, extract_to: str = "data") -> str:
 
     dataset_root = os.path.join(extract_to, "Dataset")
     
-    # Extract only if not already extracted
     if not os.path.exists(dataset_root):
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(extract_to)
@@ -88,7 +84,6 @@ def recommend_items(catalog, classes):
             st.markdown(f"[View Item]({item['link']})")
     else:
         st.warning("No recommendations found for this terrain.")
-
 
 # -------------------- Main App --------------------
 def main():
