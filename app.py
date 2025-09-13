@@ -149,7 +149,9 @@ def main():
             recommend_items(catalog, predicted_classes)
 
     elif input_type == "Coordinates":
-        authenticate_earth_engine(st.secrets["gcp"]["gcloud_json"])
+        if "ee_initialized" not in st.session_state:
+            authenticate_earth_engine(st.secrets["gcp"]["gcloud_json"])
+            st.session_state["ee_initialized"] = True
 
         st.subheader("Select Coordinates")
 
@@ -191,7 +193,7 @@ def main():
 
                 m = folium.Map(
                     location=[lat, lon],
-                    zoom_start=10,
+                    zoom_start=8,
                     control_scale=False,
                     zoom_control=False,
                     dragging=False,
@@ -231,12 +233,7 @@ def main():
 
                         m = folium.Map(
                             location=[lat, lon],
-                            zoom_start=10,
-                            control_scale=False,
-                            zoom_control=False,
-                            dragging=False,
-                            scrollWheelZoom=False,
-                            doubleClickZoom=False
+                            zoom_start=8
                         )
 
                         folium.Marker([lat, lon], popup=f"Selected Location: ({lat:.6f}, {lon:.6f})").add_to(m)
