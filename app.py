@@ -160,7 +160,15 @@ def main():
             horizontal=True,
             key="coord_input_radio"
         )
+        
+        if "last_coord_input_mode" not in st.session_state:
+            st.session_state.last_coord_input_mode = coord_input_mode
 
+        if st.session_state.last_coord_input_mode != coord_input_mode:
+            for key in ["prediction", "image_path", "confidences", "apply_heuristic_note", "condition", "weather_summary"]:
+                st.session_state.pop(key, None)
+            st.session_state.last_coord_input_mode = coord_input_mode
+    
         lat, lon = None, None
 
         # -------------------- Enter Manually --------------------
@@ -281,7 +289,7 @@ def main():
             except Exception as e:
                 st.error(f"Satellite patch for this location is not available. Please make sure the coordinates are on land.")
 
-        if "prediction" in st.session_state:
+        if input_type == "Coordinates" and coord_input_mode == st.session_state.get("last_coord_input_mode") and "prediction" in st.session_state:
             image_path = st.session_state["image_path"]
             prediction = st.session_state["prediction"]
             confidences = st.session_state["confidences"]
